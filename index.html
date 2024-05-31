@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altéa Reborn - Character Creation Tool</title>
+    <link rel="stylesheet" href="vendor/bootstrap.css" />
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <div class="canvas-container">
+        <canvas id="canvas"></canvas>
+        <canvas id="hairCanvas"></canvas>
+        <canvas id="beardCanvas"></canvas>
+        <canvas id="eyebrowCanvas"></canvas>
+    </div>
+    
+    <canvas id="generatorCanvas" style="display: none;"></canvas>
+    <canvas id="skin-container"></canvas>
+    
+    <div id="panel">
+        <div class="d-flex justify-content-between mb-4">
+            <div class="btn-group" role="group">
+                <input type="radio" class="btn-check" name="animationRadio" value="none" id="animationNone" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="animationNone">None</label>
+            
+                <input type="radio" class="btn-check" name="animationRadio" value="idle" id="animationIdle" autocomplete="off">
+                <label class="btn btn-outline-primary" for="animationIdle">Idle</label>
+            
+                <input type="radio" class="btn-check" name="animationRadio" value="walk" id="animationWalk" autocomplete="off">
+                <label class="btn btn-outline-primary" for="animationWalk">Walk</label>
+            </div>
+
+            <button id="refreshBtn" type="button" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24" title="Reload">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>   
+            </button>
+        </div>
+
+        <div class="accordion" id="accordionPanels">
+            <!-- LAYERS -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panel-headingZero">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseZero">
+                        Layers
+                    </button>
+                </h2>
+                <div id="panel-collapseZero" class="accordion-collapse collapse show" aria-labelledby="panel-headingZero">
+                    <div class="accordion-body">
+                        <table id="layers_table" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>head</th>
+                                    <th>body</th>
+                                    <th>right arm</th>
+                                    <th>left arm</th>
+                                    <th>right leg</th>
+                                    <th>left leg</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>inner</th>
+                                    <td><input type="checkbox" data-layer="innerLayer" data-part="head" checked=""></td>
+                                    <td><input type="checkbox" data-layer="innerLayer" data-part="body" checked=""></td>
+                                    <td><input type="checkbox" data-layer="innerLayer" data-part="rightArm" checked=""></td>
+                                    <td><input type="checkbox" data-layer="innerLayer" data-part="leftArm" checked=""></td>
+                                    <td><input type="checkbox" data-layer="innerLayer" data-part="rightLeg" checked=""></td>
+                                    <td><input type="checkbox" data-layer="innerLayer" data-part="leftLeg" checked=""></td>
+                                </tr>
+                                <tr>
+                                    <th>outer</th>
+                                    <td><input type="checkbox" data-layer="outerLayer" data-part="head" checked=""></td>
+                                    <td><input type="checkbox" data-layer="outerLayer" data-part="body" checked=""></td>
+                                    <td><input type="checkbox" data-layer="outerLayer" data-part="rightArm" checked=""></td>
+                                    <td><input type="checkbox" data-layer="outerLayer" data-part="leftArm" checked=""></td>
+                                    <td><input type="checkbox" data-layer="outerLayer" data-part="rightLeg" checked=""></td>
+                                    <td><input type="checkbox" data-layer="outerLayer" data-part="leftLeg" checked=""></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- BODY -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panel-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseOne">
+                        Body
+                    </button>
+                </h2>
+                <div id="panel-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panel-headingOne">
+                    <div class="accordion-body">
+                        <label for="bodyStyle" class="form-label">Body Style</label>
+                        <input class="form-range" type="range" name="bodyStyle" id="bodyStyle" min="0" value="0" />
+                        
+                        <label for="bodyColor" class="form-label">Body Color</label>
+                        <input class="form-range" type="range" name="bodyColor" id="bodyColor" min="0" value="1" />
+
+                        <label for="underwareStyle" class="form-label">Underware Style</label>
+                        <input class="form-range" type="range" name="underwareStyle" id="underwareStyle" min="0" value="0" />
+                    </div>
+                </div>
+            </div>
+            <!-- HAIR -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panel-headingTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseTwo">
+                        Hair
+                    </button>
+                </h2>
+                <div id="panel-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panel-headingTwo">
+                    <div class="accordion-body">
+                        <label for="hairStyle" class="form-label">Hair Style</label>
+                        <input class="form-range" type="range" name="hairStyle" id="hairStyle" min="0" value="0" />
+                        
+                        <label for="hairColor" class="form-label">Hair color</label>
+                        <input class="form-control" type="color" name="hairColor" id="hairColor" />
+                    </div>
+                </div>
+            </div>
+            <!-- PROPS -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panel-headingProps">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseProps">
+                        Props
+                    </button>
+                </h2>
+                <div id="panel-collapseProps" class="accordion-collapse collapse show" aria-labelledby="panel-headingProps">
+                    <div class="accordion-body">
+                        <label for="beardStyle" class="form-label">Beard Style</label>
+                        <input class="form-range" type="range" name="beardStyle" id="beardStyle" min="0" value="0" />
+
+                        <label for="eyebrowStyle" class="form-label">Eyebrows Style</label>
+                        <input class="form-range" type="range" name="eyebrowStyle" id="eyebrowStyle" min="0" value="0" />
+                    </div>
+                </div>
+            </div>
+             <!-- EYES -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panel-headingEyes">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseEyes">
+                        Eyes
+                    </button>
+                </h2>
+                <div id="panel-collapseEyes" class="accordion-collapse collapse show" aria-labelledby="panel-headingEyes">
+                    <div class="accordion-body">
+                        <label for="eyesColor" class="form-label">Eyes color</label>
+                        <input class="form-control" type="color" name="eyesColor" id="eyesColor" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Temporary -->
+    <script src="vendor/bootstrap.bundle.js"></script>
+    <script src="vendor/skinview3d.js"></script>
+    <script src="logic.js"></script>
+</body>
+</html>
