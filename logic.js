@@ -183,7 +183,7 @@ const bodyColors = [
 
 var currBodyStyle = 0;
 var currUnderwareStyle = 0;
-var currBodyColor = 1;
+var currBodyColor = bodyColors[1];
 var currHairStyle = 0;
 var currBeardStyle = 0;
 var currEyebrowStyle = 0;
@@ -233,7 +233,7 @@ function draw() {
     ctxBody.clearRect(0, 0, 128, 128);
     ctxBody.drawImage(img1, 0, 0, 128, 128);
     ctxBody.globalCompositeOperation = 'source-atop';
-    ctxBody.fillStyle = bodyColors[currBodyColor];
+    ctxBody.fillStyle = currBodyColor;
     ctxBody.fillRect(0, 0, 128, 128);
     ctxBody.globalCompositeOperation = 'multiply';
     ctxBody.drawImage(img1, 0, 0, 128, 128);
@@ -417,18 +417,34 @@ document.getElementById('bodyGenderMan').addEventListener('click', function() {
     draw();
 });
 
+/* Body Color */
+function updateColor(newColor) {
+    currBodyColor = newColor;
+    draw();
+}
+bodyColors.forEach(x => {
+    let button = document.createElement("button");
+    button.className = "btn btn-secondary btn-color"; // add the class
+    button.style.backgroundColor = x; // set the style
+    button.onclick = () => updateColor(x);
+    document.getElementById('body-colors').appendChild(button);
+});
+{
+    let input = document.createElement("input");
+    input.type = "color";
+    input.className = "btn btn-secondary btn-color btn-color-rainbow";
+    input.addEventListener('input', function() {
+        updateColor(input.value);
+    }, false);
+    document.getElementById('body-colors').appendChild(input);
+}
+
+/* */
 var underwareStyle = document.getElementById('underwareStyle');
 underwareStyle.max = underwares.length - 1;
 underwareStyle.addEventListener('input', function() {
     currUnderwareStyle = underwareStyle.value;
     reloadImages();
-    draw();
-}, false);
-
-var bodyColor = document.getElementById('bodyColor');
-bodyColor.max = bodyColors.length - 1;
-bodyColor.addEventListener('input', function() {
-    currBodyColor = bodyColor.value;
     draw();
 }, false);
 
