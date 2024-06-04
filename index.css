@@ -58,6 +58,13 @@ html, body {
   background-color: transparent;
 }
 
+.mr-3px {
+  margin-right: 3px;
+}
+.mr-3px:last-child {
+  margin-right: 0;
+}
+
 .btn-color {
   height: 24px;
   width: 24px;

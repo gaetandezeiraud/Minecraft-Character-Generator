@@ -439,15 +439,22 @@ bodyColors.forEach(x => {
     document.getElementById('body-colors').appendChild(input);
 }
 
-/* */
-var underwareStyle = document.getElementById('underwareStyle');
-underwareStyle.max = underwares.length - 1;
-underwareStyle.addEventListener('input', function() {
-    currUnderwareStyle = underwareStyle.value;
+/* Underware */
+function updareUnderware(index) {
+    currUnderwareStyle = index;
     reloadImages();
     draw();
-}, false);
+}
+underwares.forEach((x, i) => {
+    let button = document.createElement("button");
+    button.innerHTML = i;
+    button.className = "btn btn-secondary btn-sm mr-3px"; // add the class
+    button.style.backgroundColor = x; // set the style
+    button.onclick = () => updareUnderware(i);
+    document.getElementById('underware-style').appendChild(button);
+});
 
+/* Hair */
 var hairStyle = document.getElementById('hairStyle');
 hairStyle.max = hairs.length - 1;
 hairStyle.addEventListener('input', function() {
