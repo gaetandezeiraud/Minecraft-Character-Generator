@@ -31,11 +31,9 @@ const availableAnimations = {
 	walk: new skinview3d.WalkingAnimation(),
 };
 
-const skinParts = ['head', 'body', 'rightArm', 'leftArm', 'rightLeg', 'leftLeg'];
-const skinLayers = ['innerLayer', 'outerLayer'];
-
-skinViewer.loadPanorama('../assets/panorama.png');
+skinViewer.loadBackground('../assets/Mangrove_House.webp');
 skinViewer.zoom = 0.5;
+animationChange('idle');
 
 // Assets
 var img1;
@@ -231,13 +229,6 @@ function drawPixel(context, x, y, color) {
 };
 
 function draw() {
-    for (const part of skinParts) {
-        for (const layer of skinLayers) {
-            skinViewer.playerObject.skin[part][layer].visible =
-                document.querySelector(`#layers_table input[type="checkbox"][data-part="${part}"][data-layer="${layer}"]`).checked;
-        }
-    }
-
     // body
     ctxBody.clearRect(0, 0, 128, 128);
     ctxBody.drawImage(img1, 0, 0, 128, 128);
@@ -344,49 +335,87 @@ function reloadImages() {
     img4 = loadImage(eyebrows[currEyebrowStyle], main);
 }
 
+function resetBtn(DOMName) {
+    document.getElementById(DOMName).classList.remove('btn-primary');
+    document.getElementById(DOMName).classList.add('btn-secondary');
+}
+
+function activeBtn(DOMName) {
+    document.getElementById(DOMName).classList.add('btn-primary');
+    document.getElementById(DOMName).classList.remove('btn-secondary');
+}
+
 // UI
-const animationRadio = document.querySelectorAll('input[name="animationRadio"]');
-function animationChange() {
-    let selectedAnimation;
-    for (const radioButton of animationRadio) {
-        if (radioButton.checked) {
-            selectedAnimation = radioButton.value;
-            break;
-        }
-    }
-    
+function animationChange(selectedAnimation) {    
+    document.getElementById('idleAnimBtn').classList.remove('btn-primary');
+    document.getElementById('idleAnimBtn').classList.add('btn-secondary');
+
+    document.getElementById('walkAnimBtn').classList.remove('btn-primary');
+    document.getElementById('walkAnimBtn').classList.add('btn-secondary');
+
+    document.getElementById('noneAnimBtn').classList.remove('btn-primary');
+    document.getElementById('noneAnimBtn').classList.add('btn-secondary');
+
     switch (selectedAnimation)
     {
         case 'none':
             skinViewer.animation = null;
+            document.getElementById('noneAnimBtn').classList.add('btn-primary');
+            document.getElementById('noneAnimBtn').classList.remove('btn-secondary');
             break;
         case 'idle':
             skinViewer.animation = availableAnimations['idle'];
             skinViewer.animation.speed = 1;
+            document.getElementById('idleAnimBtn').classList.add('btn-primary');
+            document.getElementById('idleAnimBtn').classList.remove('btn-secondary');
             break;
         case 'walk':
             skinViewer.animation = availableAnimations['walk'];
             skinViewer.animation.speed = 1;
+            document.getElementById('walkAnimBtn').classList.add('btn-primary');
+            document.getElementById('walkAnimBtn').classList.remove('btn-secondary');
             break;
     }
 }
 
-for (const radioButton of animationRadio) {
-    radioButton.addEventListener('change', animationChange);
-}   
-
+/* Refresh */
 var refreshBtn = document.getElementById('refreshBtn');
 refreshBtn.addEventListener('click', function() {
     window.location.reload();
 });
 
-var bodyStyle = document.getElementById('bodyStyle');
-bodyStyle.max = bodies.length - 1;
-bodyStyle.addEventListener('input', function() {
-    currBodyStyle = bodyStyle.value;
+/* Animation */
+var idleAnimBtn = document.getElementById('idleAnimBtn');
+idleAnimBtn.addEventListener('click', function() {
+    animationChange('idle');
+});
+
+var walkAnimBtn = document.getElementById('walkAnimBtn');
+walkAnimBtn.addEventListener('click', function() {
+    animationChange('walk');
+});
+
+var noneAnimBtn = document.getElementById('noneAnimBtn');
+noneAnimBtn.addEventListener('click', function() {
+    animationChange('none');
+});
+
+/* Body gender */
+document.getElementById('bodyGenderWoman').addEventListener('click', function() {
+    resetBtn('bodyGenderMan');
+    activeBtn('bodyGenderWoman');
+    currBodyStyle = 0;
     reloadImages();
     draw();
-}, false);
+});
+
+document.getElementById('bodyGenderMan').addEventListener('click', function() {
+    resetBtn('bodyGenderWoman');
+    activeBtn('bodyGenderMan');
+    currBodyStyle = 1;
+    reloadImages();
+    draw();
+});
 
 var underwareStyle = document.getElementById('underwareStyle');
 underwareStyle.max = underwares.length - 1;
@@ -438,13 +467,3 @@ eyebrowStyle.addEventListener('input', function() {
     reloadImages();
     draw();
 }, false);
-
-for (const part of skinParts) {
-    for (const layer of skinLayers) {
-        document.querySelector(`#layers_table input[type="checkbox"][data-part="${part}"][data-layer="${layer}"]`)
-            .addEventListener("change", function(e) { 
-                skinViewer.playerObject.skin[part][layer].visible = e.target.checked;
-                draw();
-            });
-    }
-}

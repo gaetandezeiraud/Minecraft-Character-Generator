@@ -47,6 +47,13 @@ html, body {
   overflow-y: overlay;
 }
 
-.table-bordered>:not(caption)>*>* {
-  padding: 1px;
+.btn-sm {
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0;
+}
+
+.btn-primary:hover::before, .btn-primary:focus::before {
+  background-color: transparent;
 }

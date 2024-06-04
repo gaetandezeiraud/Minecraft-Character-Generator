@@ -22,16 +22,11 @@
     <div id="panel">
         <img alt="Minecraft Character Generator" src="./logo.png" class="logo" />
 
-        <div class="d-flex justify-content-between mb-4">
+        <div class="text-center mb-4">
             <div class="btn-group" role="group">
-                <input type="radio" class="btn-check" name="animationRadio" value="none" id="animationNone" autocomplete="off" checked>
-                <label class="btn btn-outline-primary" for="animationNone">None</label>
-            
-                <input type="radio" class="btn-check" name="animationRadio" value="idle" id="animationIdle" autocomplete="off">
-                <label class="btn btn-outline-primary" for="animationIdle">Idle</label>
-            
-                <input type="radio" class="btn-check" name="animationRadio" value="walk" id="animationWalk" autocomplete="off">
-                <label class="btn btn-outline-primary" for="animationWalk">Walk</label>
+                <button id="idleAnimBtn" type="button" class="btn btn-secondary">Idle</button>
+                <button id="walkAnimBtn" type="button" class="btn btn-secondary">Walk</button>
+                <button id="noneAnimBtn" type="button" class="btn btn-secondary">None</button>
             </div>
 
             <button id="refreshBtn" type="button" class="btn btn-primary" title="Reload">
@@ -41,72 +36,36 @@
             </button>
         </div>
 
-        <div class="accordion" id="accordionPanels">
-            <!-- LAYERS -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panel-headingZero">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseZero">
-                        Layers
-                    </button>
-                </h2>
-                <div id="panel-collapseZero" class="accordion-collapse collapse show" aria-labelledby="panel-headingZero">
-                    <div class="accordion-body">
-                        <table id="layers_table" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>head</th>
-                                    <th>body</th>
-                                    <th>right arm</th>
-                                    <th>left arm</th>
-                                    <th>right leg</th>
-                                    <th>left leg</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>inner</th>
-                                    <td><input type="checkbox" data-layer="innerLayer" data-part="head" checked=""></td>
-                                    <td><input type="checkbox" data-layer="innerLayer" data-part="body" checked=""></td>
-                                    <td><input type="checkbox" data-layer="innerLayer" data-part="rightArm" checked=""></td>
-                                    <td><input type="checkbox" data-layer="innerLayer" data-part="leftArm" checked=""></td>
-                                    <td><input type="checkbox" data-layer="innerLayer" data-part="rightLeg" checked=""></td>
-                                    <td><input type="checkbox" data-layer="innerLayer" data-part="leftLeg" checked=""></td>
-                                </tr>
-                                <tr>
-                                    <th>outer</th>
-                                    <td><input type="checkbox" data-layer="outerLayer" data-part="head" checked=""></td>
-                                    <td><input type="checkbox" data-layer="outerLayer" data-part="body" checked=""></td>
-                                    <td><input type="checkbox" data-layer="outerLayer" data-part="rightArm" checked=""></td>
-                                    <td><input type="checkbox" data-layer="outerLayer" data-part="leftArm" checked=""></td>
-                                    <td><input type="checkbox" data-layer="outerLayer" data-part="rightLeg" checked=""></td>
-                                    <td><input type="checkbox" data-layer="outerLayer" data-part="leftLeg" checked=""></td>
-                                </tr>
-                            </tbody>
-                        </table>
+        <!-- BODY -->
+        <div class="card">
+            <h3 class="card-title">Body</h3>
+            <div class="card-text">
+                <div class="form-inline d-flex justify-content-between">
+                    <label class="form-label">Gender: </label>
+                    <div>
+                        <button id="bodyGenderWoman" class="btn btn-sm btn-primary">Woman</button>
+                        <button id="bodyGenderMan" class="btn btn-sm btn-secondary">Man</button>
                     </div>
                 </div>
-            </div>
-            <!-- BODY -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panel-headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseOne">
-                        Body
-                    </button>
-                </h2>
-                <div id="panel-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panel-headingOne">
-                    <div class="accordion-body">
-                        <label for="bodyStyle" class="form-label">Body Style</label>
-                        <input class="form-range" type="range" name="bodyStyle" id="bodyStyle" min="0" value="0" />
-                        
-                        <label for="bodyColor" class="form-label">Body Color</label>
-                        <input class="form-range" type="range" name="bodyColor" id="bodyColor" min="0" value="1" />
 
-                        <label for="underwareStyle" class="form-label">Underware Style</label>
-                        <input class="form-range" type="range" name="underwareStyle" id="underwareStyle" min="0" value="0" />
-                    </div>
+                <label for="bodyStyle" class="form-label">Body Style</label>
+                <input class="form-control-range" type="range" name="bodyStyle" id="bodyStyle" min="0" value="0" />
+
+                <div class="form-group">
+                    <label for="bodyColor" class="form-label">Body Color</label>
+                    <input class="form-control-range" type="range" name="bodyColor" id="bodyColor" min="0" value="1" />
+                </div>
+
+                <div class="form-group">
+                    <label for="underwareStyle" class="form-label">Underware Style</label>
+                    <input class="form-control-range" type="range" name="underwareStyle" id="underwareStyle" min="0" value="0" />
                 </div>
             </div>
+        </div>
+
+        <div class="accordion" id="accordionPanels">
+            <!-- BODY -->
+ 
             <!-- HAIR -->
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panel-headingTwo">
