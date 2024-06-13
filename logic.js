@@ -51,37 +51,21 @@ var imagesLoaded = 0;
 var finalImageInGeneration = false;
 var finalImagesLoaded = 0;
 
-// Get assets 
-//const path = require('path');
-//const fs = require('fs');
-
 // Body
-/*
-const bodyDirectoryPath = path.join(__dirname, '..', 'assets', 'body');
-const bodyFiles = fs.readdirSync(bodyDirectoryPath);
-
-let bodies = [];
-bodyFiles.forEach((body) => {
-    bodies.push(path.join(bodyDirectoryPath, body));
-});
-console.log('Bodies:', bodies);
-*/
 let bodies = [
     './assets/body/normalfemme.png',
     './assets/body/normalhomme.png',
 ];
 
-// Underwares
-/*
-const underwaresDirectoryPath = path.join(__dirname, '..', 'assets', 'underware');
-const underwaresFiles = fs.readdirSync(underwaresDirectoryPath);
+const bodyColors = [
+    '#FFDBAC',
+    '#F1C27D',
+    '#E0AC69',
+    '#C68642',
+    '#8D5524',
+];
 
-let underwares = [];
-underwaresFiles.forEach((underware) => {
-    underwares.push(path.join(underwaresDirectoryPath, underware));
-});
-console.log('Underwares:', underwares);
-*/
+// Underwares
 let underwares = [
     './assets/underware/Femme court.png',
     './assets/underware/Femme long.png',
@@ -90,16 +74,6 @@ let underwares = [
 ];
 
 // Hairs
-/*
-const hairDirectoryPath = path.join(__dirname, '..', 'assets', 'hair');
-const hairFiles = fs.readdirSync(hairDirectoryPath);
-
-let hairs = [];
-hairFiles.forEach((hair) => {
-    hairs.push(path.join(hairDirectoryPath, hair));
-});
-console.log('Hairs:', hairs);
-*/
 let hairs = [
     './assets/hair/Chauve.png',
     './assets/hair/Femme 1.png',
@@ -118,17 +92,15 @@ let hairs = [
     './assets/hair/Homme 7.png',
 ];
 
-// Beards
-/*
-const beardDirectoryPath = path.join(__dirname, '..', 'assets', 'beard');
-const beardFiles = fs.readdirSync(beardDirectoryPath);
+const hairColors = [
+    '#FAF0BE',
+    '#282828',
+    '#5A3214',
+    '#DC95DC',
+    '#50B4FF',
+];
 
-let beards = [];
-beardFiles.forEach((beard) => {
-    beards.push(path.join(beardDirectoryPath, beard));
-});
-console.log('Beards:', beards);
-*/
+// Beards
 let beards = [
     './assets/beard/1.png',
     './assets/beard/Femme 1.png',
@@ -144,16 +116,6 @@ let beards = [
 ];
 
 // Eyebrows
-/*
-const eyebrowDirectoryPath = path.join(__dirname, '..', 'assets', 'eyebrow');
-const eyebrowFiles = fs.readdirSync(eyebrowDirectoryPath);
-
-let eyebrows = [];
-eyebrowFiles.forEach((eyebrow) => {
-    eyebrows.push(path.join(eyebrowDirectoryPath, eyebrow));
-});
-console.log('Eyebrows:', eyebrows);
-*/
 let eyebrows = [
     './assets/eyebrow/1.png',
     './assets/eyebrow/Femme 1.png',
@@ -172,26 +134,31 @@ let eyebrows = [
     './assets/eyebrow/Homme 7.png',
 ];
 
-// Variables
-const bodyColors = [
-    '#FFDBAC',
-    '#F1C27D',
-    '#E0AC69',
-    '#C68642',
-    '#8D5524',
+// Eyes 
+const eyesColors = [
+    '#654321',
+    '#0000FF',
+    '#008000',
+    '#B5AE60',
 ];
 
+// Variables
 var currBodyStyle = 0;
 var currUnderwareStyle = 0;
 var currBodyColor = bodyColors[1];
 var currHairStyle = 0;
 var currBeardStyle = 0;
 var currEyebrowStyle = 0;
-var hairColorHex = '#000000';
-var eyesColorHex = '#000000';
+var hairColorHex = hairColors[0];
+var eyesColorHex = eyesColors[0];
 
 reloadImages();
 
+/* Download */
+var downloadLink = document.getElementById('downloadLink');
+downloadLink.setAttribute('download', 'my-minecraft-skin.png');
+
+/* Logic */
 function drawPixel(context, x, y, color) {
 	var roundedX = Math.round(x);
     var roundedY = Math.round(y);
@@ -209,7 +176,8 @@ function draw3D() {
         ctxGenerator.drawImage(beardImg, 0, 0);
         ctxGenerator.drawImage(eyebrowImg, 0, 0);
 
-        var finalImg = generatorCanvas.toDataURL('image/png');
+        finalImg = generatorCanvas.toDataURL('image/png');
+        downloadLink.setAttribute('href', finalImg.replace("image/png", "image/octet-stream"));
         skinViewer.loadSkin(finalImg);
 
         finalImagesLoaded = 0;
@@ -440,7 +408,7 @@ bodyColors.forEach(x => {
 }
 
 /* Underware */
-function updareUnderware(index) {
+function updateUnderware(index) {
     currUnderwareStyle = index;
     reloadImages();
     draw();
@@ -450,43 +418,95 @@ underwares.forEach((x, i) => {
     button.innerHTML = i;
     button.className = "btn btn-secondary btn-sm mr-3px"; // add the class
     button.style.backgroundColor = x; // set the style
-    button.onclick = () => updareUnderware(i);
+    button.onclick = () => updateUnderware(i);
     document.getElementById('underware-style').appendChild(button);
 });
 
-/* Hair */
-var hairStyle = document.getElementById('hairStyle');
-hairStyle.max = hairs.length - 1;
-hairStyle.addEventListener('input', function() {
-    currHairStyle = hairStyle.value;
+/* Hair style */
+function updateHairStyle(index) {
+    currHairStyle = index;
     reloadImages();
     draw();
-}, false);
+}
+hairs.forEach((x, i) => {
+    let button = document.createElement("button");
+    button.innerHTML = i;
+    button.className = "btn btn-secondary btn-sm mr-3px"; // add the class
+    button.style.backgroundColor = x; // set the style
+    button.onclick = () => updateHairStyle(i);
+    document.getElementById('hair-style').appendChild(button);
+});
 
-var hairColor = document.getElementById('hairColor');
-hairColor.addEventListener('input', function() {
-    hairColorHex = hairColor.value;
+/* Hair color */
+function updateHairColor(color) {
+    hairColorHex = color;
     draw();
-}, false);
+}
+hairColors.forEach(x => {
+    let button = document.createElement("button");
+    button.className = "btn btn-secondary btn-color"; // add the class
+    button.style.backgroundColor = x; // set the style
+    button.onclick = () => updateHairColor(x);
+    document.getElementById('hair-colors').appendChild(button);
+});
+{
+    let input = document.createElement("input");
+    input.type = "color";
+    input.className = "btn btn-secondary btn-color btn-color-rainbow";
+    input.addEventListener('input', function() {
+        updateHairColor(input.value);
+    }, false);
+    document.getElementById('hair-colors').appendChild(input);
+}
 
-var eyesColor = document.getElementById('eyesColor');
-eyesColor.addEventListener('input', function() {
-    eyesColorHex = eyesColor.value;
+/* Eyes color */
+function updateEyesColor(color) {
+    eyesColorHex = color;
     draw();
-}, false);
+}
+eyesColors.forEach(x => {
+    let button = document.createElement("button");
+    button.className = "btn btn-secondary btn-color"; // add the class
+    button.style.backgroundColor = x; // set the style
+    button.onclick = () => updateEyesColor(x);
+    document.getElementById('eyes-color').appendChild(button);
+});
+{
+    let input = document.createElement("input");
+    input.type = "color";
+    input.className = "btn btn-secondary btn-color btn-color-rainbow";
+    input.addEventListener('input', function() {
+        updateEyesColor(input.value);
+    }, false);
+    document.getElementById('eyes-color').appendChild(input);
+}
 
-var beardStyle = document.getElementById('beardStyle');
-beardStyle.max = beards.length - 1;
-beardStyle.addEventListener('input', function() {
-    currBeardStyle = beardStyle.value;
+/* Beard */
+function updateBeardStyle(index) {
+    currBeardStyle = index;
     reloadImages();
     draw();
-}, false);
+}
+beards.forEach((x, i) => {
+    let button = document.createElement("button");
+    button.innerHTML = i;
+    button.className = "btn btn-secondary btn-sm mr-3px"; // add the class
+    button.style.backgroundColor = x; // set the style
+    button.onclick = () => updateBeardStyle(i);
+    document.getElementById('beard-style').appendChild(button);
+});
 
-var eyebrowStyle = document.getElementById('eyebrowStyle');
-eyebrowStyle.max = eyebrows.length - 1;
-eyebrowStyle.addEventListener('input', function() {
-    currEyebrowStyle = eyebrowStyle.value;
+/* Eyebrows */
+function updateEyebrowsStyle(index) {
+    currEyebrowStyle = index;
     reloadImages();
     draw();
-}, false);
+}
+eyebrows.forEach((x, i) => {
+    let button = document.createElement("button");
+    button.innerHTML = i;
+    button.className = "btn btn-secondary btn-sm mr-3px"; // add the class
+    button.style.backgroundColor = x; // set the style
+    button.onclick = () => updateEyebrowsStyle(i);
+    document.getElementById('eyebrows-style').appendChild(button);
+});

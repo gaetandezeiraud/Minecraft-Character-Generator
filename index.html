@@ -64,62 +64,45 @@
         <div class="card">
             <h3 class="card-title">Hair</h3>
             <div class="card-text">
-
-            </div>
-        </div>
-
-        <div class="accordion" id="accordionPanels">
-            <!-- BODY -->
- 
-            <!-- HAIR -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panel-headingTwo">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseTwo">
-                        Hair
-                    </button>
-                </h2>
-                <div id="panel-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panel-headingTwo">
-                    <div class="accordion-body">
-                        <label for="hairStyle" class="form-label">Hair Style</label>
-                        <input class="form-range" type="range" name="hairStyle" id="hairStyle" min="0" value="0" />
-                        
-                        <label for="hairColor" class="form-label">Hair color</label>
-                        <input class="form-control" type="color" name="hairColor" id="hairColor" />
-                    </div>
+                <div class="form-inline d-flex justify-content-between mb-3">
+                    <label class="form-label">Hair style:</label>
+                    <div id="hair-style"></div>
                 </div>
-            </div>
-            <!-- PROPS -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panel-headingProps">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseProps">
-                        Props
-                    </button>
-                </h2>
-                <div id="panel-collapseProps" class="accordion-collapse collapse show" aria-labelledby="panel-headingProps">
-                    <div class="accordion-body">
-                        <label for="beardStyle" class="form-label">Beard Style</label>
-                        <input class="form-range" type="range" name="beardStyle" id="beardStyle" min="0" value="0" />
-
-                        <label for="eyebrowStyle" class="form-label">Eyebrows Style</label>
-                        <input class="form-range" type="range" name="eyebrowStyle" id="eyebrowStyle" min="0" value="0" />
-                    </div>
-                </div>
-            </div>
-             <!-- EYES -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panel-headingEyes">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panel-collapseEyes">
-                        Eyes
-                    </button>
-                </h2>
-                <div id="panel-collapseEyes" class="accordion-collapse collapse show" aria-labelledby="panel-headingEyes">
-                    <div class="accordion-body">
-                        <label for="eyesColor" class="form-label">Eyes color</label>
-                        <input class="form-control" type="color" name="eyesColor" id="eyesColor" />
-                    </div>
+                
+                <div class="form-inline d-flex justify-content-between mb-3">
+                    <label class="form-label">Hair color:</label>
+                    <div id="hair-colors"></div>
                 </div>
             </div>
         </div>
+
+        <!-- EYES -->
+        <div class="card">
+            <h3 class="card-title">Eyes</h3>
+            <div class="form-inline d-flex justify-content-between mb-3">
+                <label class="form-label">Color:</label>
+                <div id="eyes-color"></div>
+            </div>
+        </div>
+
+        <!-- PROPS -->
+        <div class="card">
+            <h3 class="card-title">Props</h3>
+            <div class="card-text">
+                <div class="form-inline d-flex justify-content-between mb-3">
+                    <label class="form-label">Beard style:</label>
+                    <div id="beard-style"></div>
+                </div>
+
+                <div class="form-inline d-flex justify-content-between mb-3">
+                    <label class="form-label">Eyebrows style:</label>
+                    <div id="eyebrows-style"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export -->
+        <a id="downloadLink" class="btn btn-primary btn-block mt-4">Download the skin</a>
     </div>
     
     <!-- Temporary -->
