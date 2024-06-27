@@ -1,4 +1,4 @@
-![Logo](https://github.com/gaetandezeiraud/minecraft-skin-generator/logo.png)
+![Logo](https://github.com/gaetandezeiraud/Minecraft-Character-Generator/blob/main/logo.png)
 
 
 # Minecraft Character Generator
@@ -8,4 +8,4 @@ Like an editor in an RPG. It is possible to add new "source" images for more var
 
 No update, no new feature are provided. It was originally designed for a server called "Altéa Reborn" which has since been abandoned. For skin generation for players and NPCs.
 
-![Minecraft Character Generator](https://github.com/gaetandezeiraud/minecraft-skin-generator/screenshot.png "Screenshot")
+![Minecraft Character Generator](https://github.com/gaetandezeiraud/Minecraft-Character-Generator/blob/main/screenshot.png "Screenshot")
